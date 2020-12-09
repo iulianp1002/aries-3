@@ -9,6 +9,12 @@ router.get('/carriers',
 ctrl.getCarriers,
 ctrl.responseToJSON('carriers')
 )
+
+router.get('/carriersUsers',
+ctrl.getCarriersUsers,
+ctrl.responseToJSON('carriers')
+)
+
 router.post('/carriers',
 ctrl.getCarriers,
 ctrl.createCarrier,

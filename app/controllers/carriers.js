@@ -1,4 +1,5 @@
 
+const { populate } = require('../models/carriers');
 const Carrier = require('../models/carriers');
 module.exports = {
     getCarriers: getCarriers,
@@ -6,7 +7,8 @@ module.exports = {
     createCarrier: createCarrier,
     getCarrierById: getCarrierById,
     deleteOne: deleteOne,
-    responseToJSON: responseToJSON
+    responseToJSON: responseToJSON,
+    getCarriersUsers: getCarriersUsers
 };
 
 
@@ -69,4 +71,18 @@ function responseToJSON(prop){
     return function (req,res,next){
         return res.json(req.resources[prop]);
     }
+}
+function getCarriersUsers(req,res,next){ console.log('new route')
+    Carrier
+    .find()
+    .populate('user')
+    .exec(function(err,result){
+        if (err){
+            return res.json(err)
+        }
+        console.log('result new route:',result)
+        req.resources.carriers = result;
+        return next();
+    })
+    
 }

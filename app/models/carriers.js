@@ -2,6 +2,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = mongoose.ObjectId;
 
 const carrierSchema = new Schema ({
     name:{
@@ -18,6 +19,11 @@ const carrierSchema = new Schema ({
         type: Number,
         required: false,
         unique: false
+    },
+    user:{
+        type: ObjectId,
+        ref:'user',
+        required: true
     }
 })
 

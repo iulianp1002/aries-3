@@ -21,7 +21,7 @@ function  isAdmin(req,res,next){
 function getUsers(req,res,next){
     console.log('get users')
     // return res.json({postUsers:true});
-    User.find(function(err,result){
+    User.find({"details.role":req.query.role},function(err,result){
         if (err){
             return res.json(err)
         }
@@ -56,7 +56,14 @@ return next();
 }
 
 function createUser(req,res,next){
-    const user = new User(req.body);
+    const addUser = new User(req.body);
+    // addUser.details ={
+    //     age:req.body.age,
+    //     role:req.body.role
+    // }
+    addUser.details = JSON.parse(addUser.details);
+    addUser.documents = JSON.parse(addUser.documents)
+    const user = new User(addUser);
     user.save(function(err,result){
         if (err){
             console.log('err',err)
@@ -75,13 +82,14 @@ function getUserById(req,res,next){ console.log('req:',req.params.userid)
             return res.json(err)
         }
  console.log('result:',result)
-       req.resources.carriers = result;
+       req.resources.users = result;
        return next();
     })
 }
 
 function responseToJSON(prop){
     return function (req,res,next){
+       // console.log('res:',req.resources[prop])
         return res.json(req.resources[prop]);
     }
 }
