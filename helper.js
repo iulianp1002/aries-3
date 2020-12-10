@@ -1,8 +1,15 @@
 module.exports = {
-    getDate:getDateFunc
+    getDate:getDateFunc,
+    responseToJSON: responseToJSON
 };
 
 
-function getDateFunct(){
+function getDateFunc(){
     return `our date --${new Date()}`
+}
+
+function responseToJSON(prop){
+    return function (req,res,next){
+        return res.json(req.resources[prop]);
+    }
 }

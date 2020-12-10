@@ -10,16 +10,17 @@ module.exports ={
 function initMongoose(){
     mongoose.connect(config.mongoUrl,{
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 })
 }
 
-// const db = mongoose.connection;
+const db = mongoose.connection;
 
-// db.on('error',function(param){
-//     console.log('cone',param)
-// })
+db.on('error',function(err){
+    console.log('error connecting to mongoDB:',err)
+})
 
-// db.once('open',function(param){
-//     console.log('connected',param)
-// })
+db.once('open',function(){
+    console.log('connected to mongoDB')
+})

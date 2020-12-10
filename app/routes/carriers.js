@@ -1,38 +1,38 @@
 'use strict'
 const express = require('express');
-const { responseToJSON } = require('../controllers/carriers');
+const helper = require('../../helper');
 
 const router = express.Router();
 const ctrl = require('../controllers/carriers')
 
 
 router.get('/carriers',
-ctrl.getCarriers,
-ctrl.responseToJSON('carriers')
+    ctrl.getCarriers,
+    helper.responseToJSON('carriers')
 )
 
 router.get('/carriersUsers',
-ctrl.getCarriersUsers,
-ctrl.responseToJSON('carriers')
+    ctrl.getCarriersUsers,
+    helper.responseToJSON('carriers')
 )
 
 router.post('/carriers',
-ctrl.getCarriers,
-ctrl.createCarrier,
-ctrl.responseToJSON('addCarriers')
+    ctrl.getCarriers,
+    ctrl.createCarrier,
+    helper.responseToJSON('addCarriers')
 );
 
 router.get('/carrierById/:carrierid',
-ctrl.getCarrierById,
-ctrl.responseToJSON('carriers')
+    ctrl.getCarrierById,
+    helper.responseToJSON('carriers')
 )
 router.delete('/carrier',
-ctrl.deleteOne,
-ctrl.responseToJSON('carriers')
+    ctrl.deleteOne,
+    helper.responseToJSON('carriers')
 );
 
 router.put('/carrier/:carrierId', 
-ctrl.putCarrier,
-responseToJSON('updateCarrier')
+    ctrl.putCarrier,
+    helper.responseToJSON('updateCarrier')
 )
 module.exports = router;

@@ -6,7 +6,6 @@ module.exports = {
     createCarrier: createCarrier,
     getCarrierById: getCarrierById,
     deleteOne: deleteOne,
-    responseToJSON: responseToJSON,
     getCarriersUsers: getCarriersUsers
 };
 
@@ -39,21 +38,20 @@ function putCarrier(req, res, next){
 }
 
 function deleteOne(req,res,next){
-    User.deleteOne({_id:req.params["userid"]},function(err,result){
+    User.deleteOne({_id:req.params.carrierid},function(err,result){
         if (err){
             return res.json(err);
         }
-        req.resources.users = result;
+        req.resources.deleteCarrier = result;
         return next();
     })
 }
 
 function createCarrier(req,res,next){
-    const user = new Carrier(req.body);
-    user.save(function(err,result){
+    const carrier = new Carrier(req.body);
+    carrier.save(function(err,result){
         if (err){
-            console.log('err',err)
-            return res.json(err)
+            return next(err);
         };
 
         req.resources.addCarriers = result;
@@ -62,7 +60,7 @@ function createCarrier(req,res,next){
 }
 
 function getCarrierById(req,res,next){
-    User.find({_id:req.params['carrierid']}, function(err,rersult){
+    Carrier.find({_id:req.params.carrierid}, function(err,rersult){
         if (err){
             return res.json(err)
         }
@@ -72,15 +70,11 @@ function getCarrierById(req,res,next){
     })
 }
 
-function responseToJSON(prop){
-    return function (req,res,next){
-        return res.json(req.resources[prop]);
-    }
-}
-function getCarriersUsers(req,res,next){ console.log('new route')
+function getCarriersUsers(req,res,next){
     Carrier
     .find()
-    .populate('user','email')
+    .sort({name:1}) // -1 desc
+    .populate('user','name email details.age')
     .exec(function(err,result){
         if (err){
             return res.json(err)

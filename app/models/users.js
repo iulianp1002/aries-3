@@ -6,34 +6,34 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema ({
     createdAt: Number,
     updatedAt: Number,
-    name:{
+    name: {
         type: String,
         required: true,
         unique: false
     },
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true
     },
-    isActive:{
+    isActive: {
         type: Boolean,
         required : false
     },
-    details:{
-        age:{
+    details: {
+        age: {
             type: Number
         },
-        role:{
+        role: {
             type:String
         }
     },
     documents:[
         {
-            name:{
+            name: {
                 type: String
             },
-            doctype:{
+            doctype: {
                 type: String
             }
     }
@@ -45,4 +45,4 @@ const userSchema = new Schema ({
 }
   })
 
-module.exports = mongoose.model('user',userSchema,'users')
+module.exports = mongoose.model('user', userSchema, 'users');

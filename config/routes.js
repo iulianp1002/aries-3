@@ -8,11 +8,11 @@ module.exports = {
 
 function initRoutes(app){
     const routesPath = path.join(__dirname,'../app/routes');
- const routes =['users','carriers'];
+    const routes =['users','carriers','uploads'];
 
- routes.forEach(function(route){
-     console.log("route", route);
-     app.use('/api', require(`${routesPath}/${route}`))
- })
+    routes.forEach(function(route){
+        console.log("init route", route);
+        app.use('/api', require(`${routesPath}/${route}`))
+    })
 }
 

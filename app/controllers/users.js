@@ -7,15 +7,14 @@ module.exports = {
     putUser: putUser,
     createUser: createUser,
     getUserById: getUserById,
-    deleteOne: deleteOne,
-    responseToJSON: responseToJSON
+    deleteOne: deleteOne
 };
 
 function  isAdmin(req, res, next){
     if(isAdminVal){
         return next()
     }
-    return res.send('unauthorized')
+    return res.send('unauthorized request !')
 }
 
 function getUsers(req, res, next){
@@ -56,9 +55,9 @@ function putUser(req, res, next){
 function deleteOne(req,res,next){
     User.deleteOne({_id:req.params.userid},function(err,result){
         if (err){
-            return res.json(err);
+            return next(err);
         }
-        req.resources.users = result;
+        req.resources.deleteUser = result;
         return next();
     })
 }
@@ -75,7 +74,7 @@ function createUser(req,res,next){
     user.save(function(err,result){
         if (err){
             console.log('err',err)
-            return res.json(err)
+            next({error:err,statusCode:400});
         };
 
         req.resources.addUsers = result;
@@ -93,8 +92,3 @@ function getUserById(req, res, next){
     })
 }
 
-function responseToJSON(prop){
-    return function (req,res,next){
-        return res.json(req.resources[prop]);
-    }
-}

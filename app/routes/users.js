@@ -2,31 +2,35 @@
 
 const express = require('express');
 const router = express.Router();
-const controllers = require('../controllers/users')
-
+const userCtrl = require('../controllers/users')
+const helper = require('../../helper');
 
 router.get('/users',
-    controllers.getUsers,
-    controllers.responseToJSON('users')
+    userCtrl.getUsers,
+    helper.responseToJSON('users')
 )
+
 router.post('/users',
-    controllers.getUsers,
-    controllers.createUser,
-    controllers.responseToJSON('addUsers')
+    userCtrl.isAdmin,
+    userCtrl.getUsers,
+    userCtrl.createUser,
+    helper.responseToJSON('addUsers')
 );
 
 router.get('/userById/:userid',
-    controllers.getUserById,
-    controllers.responseToJSON('users')
+    userCtrl.getUserById,
+    helper.responseToJSON('users')
 )
-router.delete('/user',
-    controllers.deleteOne,
-    controllers.responseToJSON('users')
+router.delete('/user/:userid',
+    userCtrl.isAdmin,
+    userCtrl.deleteOne,
+    helper.responseToJSON('deleteUser')
 );
 
-router.put('/user/:userId', 
-    controllers.putUser,
-    controllers.responseToJSON('updateUser')
+router.put('/user/:userId',
+    userCtrl.isAdmin,
+    userCtrl.putUser,
+    helper.responseToJSON('updateUser')
 )
 
 module.exports = router;
