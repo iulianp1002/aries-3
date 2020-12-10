@@ -11,8 +11,8 @@ function initRoutes(app){
  const routes =['users','carriers'];
 
  routes.forEach(function(route){
-     console.log("route",route);
-     app.use('/api',require(`${routesPath}/${route}`))
+     console.log("route", route);
+     app.use('/api', require(`${routesPath}/${route}`))
  })
 }
 

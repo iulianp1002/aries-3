@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema ({
+    createdAt: Number,
+    updatedAt: Number,
     name:{
         type: String,
         required: true,
@@ -36,6 +38,11 @@ const userSchema = new Schema ({
             }
     }
     ]
-})
+},
+{
+    // Make Mongoose use Unix time (seconds since Jan 1, 1970)
+    timestamps: { currentTime: () => new Date().getTime()
+}
+  })
 
 module.exports = mongoose.model('user',userSchema,'users')

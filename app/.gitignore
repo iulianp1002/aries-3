@@ -1,5 +1,5 @@
 # Dependency directories
-node_modules/
-config/environment/development
+node_modules
+config/environment/development.js
 
-config/environment/production
+config/environment/production.js

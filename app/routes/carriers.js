@@ -1,5 +1,6 @@
 'use strict'
 const express = require('express');
+const { responseToJSON } = require('../controllers/carriers');
 
 const router = express.Router();
 const ctrl = require('../controllers/carriers')
@@ -30,13 +31,8 @@ ctrl.deleteOne,
 ctrl.responseToJSON('carriers')
 );
 
-// router.put('/carrier', 
-// ctrl.isAdmin,
-// ctrl.postUsers
-// ,
-// function(req,res,next){
-//     console.log('put carrier')
-//     return res.json({putCarriers:true});
-// }
-// )
+router.put('/carrier/:carrierId', 
+ctrl.putCarrier,
+responseToJSON('updateCarrier')
+)
 module.exports = router;

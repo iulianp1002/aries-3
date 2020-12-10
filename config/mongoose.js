@@ -9,7 +9,8 @@ module.exports ={
 
 function initMongoose(){
     mongoose.connect(config.mongoUrl,{
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 })
 }
 

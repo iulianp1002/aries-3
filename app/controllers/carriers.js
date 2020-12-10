@@ -1,9 +1,8 @@
 
-const { populate } = require('../models/carriers');
 const Carrier = require('../models/carriers');
 module.exports = {
     getCarriers: getCarriers,
-    postCarrier: postCarrier,
+    putCarrier: putCarrier,
     createCarrier: createCarrier,
     getCarrierById: getCarrierById,
     deleteOne: deleteOne,
@@ -12,23 +11,29 @@ module.exports = {
 };
 
 
-function getCarriers(req,res,next){
-    console.log('get carriers')
-    
+function getCarriers(req, res, next){
     Carrier.find(function(err,result){
         if (err){
             return res.json(err)
         }
         req.resources.carriers = result;
-        return next();
-        
+        return next();     
     })
 }
 
-function postCarrier(req,res,next){
-    console.log('get users,first',req.body);
-    console.log('url form users',req.url);
-    req.resources.users = {test:1};
+function putCarrier(req, res, next){
+    Carrier.updateOne(
+        {_id: req.params.carrierId},
+        {name:req.body.name, color:req.body.color, speed:req.body.speed},
+        function(err,result){
+        if (err){
+            console.log('err',err)
+            return res.json(err)
+        };
+
+        req.resources.updateCarrier = result;
+        return next();
+    })
     
     next();
 }
@@ -57,7 +62,7 @@ function createCarrier(req,res,next){
 }
 
 function getCarrierById(req,res,next){
-    User.find({_id:req.params['carrierid']},function(err,rersult){
+    User.find({_id:req.params['carrierid']}, function(err,rersult){
         if (err){
             return res.json(err)
         }
@@ -75,12 +80,12 @@ function responseToJSON(prop){
 function getCarriersUsers(req,res,next){ console.log('new route')
     Carrier
     .find()
-    .populate('user')
+    .populate('user','email')
     .exec(function(err,result){
         if (err){
             return res.json(err)
         }
-        console.log('result new route:',result)
+        
         req.resources.carriers = result;
         return next();
     })
